@@ -323,7 +323,7 @@ class EDA:
             styled_table = top100[['연도', 'Region', 'Formatted Change', 'Change']].copy()
             styled = styled_table.style \
                 .applymap(color_scale, subset=['Change']) \
-            st.write(styled)
+            st.markdown(styled.to_html(), unsafe_allow_html=True)
 
         with tab5:
             st.subheader("Stacked Area Chart by Region")
