@@ -202,13 +202,6 @@ class Logout:
 # ---------------------
 class EDA:
     def __init__(self):
-        import pandas as pd
-        import matplotlib.pyplot as plt
-        import seaborn as sns
-        from io import StringIO
-        import streamlit as st
-
-        st.set_option('deprecation.showPyplotGlobalUse', False)
         st.title("📊 Population Trends EDA Dashboard")
 
         uploaded_file = st.file_uploader("Upload population_trends.csv", type="csv")
