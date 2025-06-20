@@ -323,7 +323,7 @@ class EDA:
             styled_table = top100[['연도', 'Region', 'Formatted Change', 'Change']].copy()
             styled = styled_table.style \
                 .applymap(color_scale, subset=['Change']) \
-                .hide(axis='columns', subset=['Change'])
+                .format({'Formatted Change': '{:,}'})
             st.write(styled)
 
         with tab5:
