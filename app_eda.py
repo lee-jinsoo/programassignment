@@ -296,14 +296,8 @@ class EDA:
                 ax2.text(v + 0.2, i, f"{v:.1f}%", va='center')
             st.pyplot(fig2)
             st.markdown("### 📌 Interpretation")
-            st.markdown(f"""- The **top chart** shows the total population change (in thousands) between {start_year} and {end_year}.
-- The **bottom chart** shows the **percentage growth rate**, relative to the population in {start_year}.
-- Regions like **Gyeonggi** and **Sejong** show notable growth, both in absolute and percentage terms.
-- **Seoul**, **Busan**, and several rural provinces exhibit consistent population decline.
-- These patterns reflect trends in **urban migration**, **aging populations**, and **economic centralization**.
-""")
-
-            
+            st.markdown("""The charts above illustrate regional population changes over the last 5 years. Gyeonggi Province experienced the largest population growth in absolute terms, gaining approximately 391,000 people. Sejong and Incheon also showed noticeable increases, reflecting urban expansion and administrative relocation. In contrast, Seoul saw the greatest decline, losing over 340,000 people, followed by Busan and Gyeongbuk. These declines highlight trends of outmigration from older metropolitan areas and rural regions. When considering growth rates, Sejong leads with a 13.5% increase, while many southern and eastern provinces, such as Gyeongbuk and Jeonnam, experienced negative growth between -3% and -4%. This suggests a growing demographic imbalance driven by urbanization, aging populations, and regional economic disparities. These trends underscore the importance of national policies focused on regional development and demographic sustainability.""")
+           
 
         with tab4:
             st.subheader("Top 100 Population Change Cases")
