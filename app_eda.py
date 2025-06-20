@@ -448,6 +448,51 @@ class EDA:
                 > - 오른쪽: 로그 변환 후 분포는 훨씬 균형잡힌 형태로, 중앙값 부근에 데이터가 집중됩니다.  
                 > - 극단치의 영향이 완화되어 이후 분석·모델링 안정성이 높아집니다.
                 """)
+        with tabs[8]:
+            st.header("9. 인구 데이터 분석")
+            uploaded = st.file_uploader("population_trends.csv 파일을 업로드하세요.", type="csv", key="pop")
+
+            if not uploaded:
+                st.info("CSV 파일을 업로드해주세요.")
+                return
+
+            df = pd.read_csv(uploaded)
+            df.replace("-", 0, inplace=True)
+            df['연도'] = pd.to_numeric(df['연도'], errors='coerce')
+            df['인구'] = pd.to_numeric(df['인구'], errors='coerce')
+
+            region_map = {
+                '서울특별시': 'Seoul', '부산광역시': 'Busan', '대구광역시': 'Daegu',
+                '인천광역시': 'Incheon', '광주광역시': 'Gwangju', '대전광역시': 'Daejeon',
+                '울산광역시': 'Ulsan', '세종특별자치시': 'Sejong', '경기도': 'Gyeonggi',
+                '강원도': 'Gangwon', '충청북도': 'Chungbuk', '충청남도': 'Chungnam',
+                '전라북도': 'Jeonbuk', '전라남도': 'Jeonnam', '경상북도': 'Gyeongbuk',
+                '경상남도': 'Gyeongnam', '제주특별자치도': 'Jeju', '전국': 'National'
+            }
+            df['region_en'] = df['지역'].map(region_map)
+
+            st.subheader("Population by Region (Area Plot)")
+            region_df = df[df['region_en'] != 'National']
+            pivot = region_df.pivot_table(index='연도', columns='region_en', values='인구')
+            pivot = pivot.fillna(0)
+            fig, ax = plt.subplots(figsize=(12, 6))
+            (pivot / 1000).plot.area(ax=ax, cmap='tab20')
+            ax.set_title("Regional Population Trends (Thousands)")
+            ax.set_xlabel("Year")
+            ax.set_ylabel("Population (Thousands)")
+            ax.legend(title="Region", bbox_to_anchor=(1.02, 1), loc='upper left')
+            st.pyplot(fig)
+
+            st.subheader("Top 100 Year-on-Year Changes")
+            region_df.sort_values(['지역', '연도'], inplace=True)
+            region_df['증감'] = region_df.groupby('지역')['인구'].diff()
+            top100 = region_df.dropna().copy()
+            top100['abs'] = top100['증감'].abs()
+            top100 = top100.sort_values('abs', ascending=False).head(100)
+            top100['인구'] = top100['인구'].map('{:,.0f}'.format)
+            top100['증감'] = top100['증감'].map('{:,.0f}'.format)
+            table = top100[['연도', 'region_en', '인구', '증감']]
+            st.dataframe(table.style.background_gradient(subset=['증감'], cmap='bwr'))
 
 
 # ---------------------
