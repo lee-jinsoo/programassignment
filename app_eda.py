@@ -312,18 +312,17 @@ class EDA:
             def color_scale(val):
                 val = float(val)
                 if val > 0:
-                    return f'background-color: rgba(0, 100, 255, {min(val / top100["Change"].max(), 1):.2f}); color: white;'
+                    return f'background-color: rgba(0, 100, 255, {min(val / max_val, 1):.2f}); color: white;'
                 elif val < 0:
-                    return f'background-color: rgba(255, 80, 80, {min(-val / abs(top100["Change"].min()), 1):.2f}); color: white;'
+                    return f'background-color: rgba(255, 80, 80, {min(-val / abs(min_val), 1):.2f}); color: white;'
                 return ''
 
             styled_table = top100[['연도', 'Region', 'Formatted Change', 'Change']].copy()
-            st.dataframe(
-                styled_table.style.applymap(color_scale, subset=['Change'])
-                                  .format({'Formatted Change': '{}'})
-                                  .hide(axis="columns", subset=["Change"]),
-                use_container_width=True
-            )
+            styled = styled_table.style \
+                .applymap(color_scale, subset=['Change']) \
+                .format({'Formatted Change': '{:,}'}) \
+                .hide(axis='columns', subset=['Change'])
+            st.write(styled)
 
         with tab5:
             st.subheader("Stacked Area Chart by Region")
