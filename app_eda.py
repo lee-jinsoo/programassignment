@@ -297,7 +297,8 @@ class EDA:
             st.pyplot(fig2)
             st.markdown("### 📌 Interpretation")
             st.markdown("""The charts above illustrate regional population changes over the last 5 years. Gyeonggi Province experienced the largest population growth in absolute terms, gaining approximately 391,000 people. Sejong and Incheon also showed noticeable increases, reflecting urban expansion and administrative relocation. In contrast, Seoul saw the greatest decline, losing over 340,000 people, followed by Busan and Gyeongbuk. These declines highlight trends of outmigration from older metropolitan areas and rural regions. When considering growth rates, Sejong leads with a 13.5% increase, while many southern and eastern provinces, such as Gyeongbuk and Jeonnam, experienced negative growth between -3% and -4%. This suggests a growing demographic imbalance driven by urbanization, aging populations, and regional economic disparities. These trends underscore the importance of national policies focused on regional development and demographic sustainability.""")
-           
+
+            
 
         with tab4:
             st.subheader("Top 100 Population Change Cases")
@@ -306,7 +307,8 @@ class EDA:
             top100 = df_diff[['연도', '지역', 'Change']].dropna().sort_values(by='Change', key=abs, ascending=False).head(100)
             top100['Region'] = top100['지역'].map(region_map)
             top100['Formatted Change'] = top100['Change'].apply(lambda x: f"{int(x):,}")
-
+            max_val = top100["Change"].max()
+            min_val = top100["Change"].min()     
             def color_scale(val):
                 val = float(val)
                 if val > 0:
