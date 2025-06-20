@@ -295,6 +295,15 @@ class EDA:
             for i, v in enumerate(sorted_rate):
                 ax2.text(v + 0.2, i, f"{v:.1f}%", va='center')
             st.pyplot(fig2)
+            st.markdown("### 📌 Interpretation")
+            st.markdown(f"""- The **top chart** shows the total population change (in thousands) between {start_year} and {end_year}.
+- The **bottom chart** shows the **percentage growth rate**, relative to the population in {start_year}.
+- Regions like **Gyeonggi** and **Sejong** show notable growth, both in absolute and percentage terms.
+- **Seoul**, **Busan**, and several rural provinces exhibit consistent population decline.
+- These patterns reflect trends in **urban migration**, **aging populations**, and **economic centralization**.
+""")
+
+            
 
         with tab4:
             st.subheader("Top 100 Population Change Cases")
